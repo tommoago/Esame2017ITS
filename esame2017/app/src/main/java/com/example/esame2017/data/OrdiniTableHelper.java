@@ -19,7 +19,7 @@ public class OrdiniTableHelper implements BaseColumns {
             NUM_PANINI + " INTEGER, " +
             NUM_GELATI + " INTEGER, " +
             NUM_BIBITE + " INTEGER, " +
-            NUM_CAFFE + " INTEGER ) ";
+            NUM_CAFFE + " INTEGER ) ;";
 
 
 }
