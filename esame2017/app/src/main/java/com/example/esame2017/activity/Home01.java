@@ -10,7 +10,7 @@ import android.widget.Button;
 import com.example.esame2017.R;
 
 public class Home01 extends AppCompatActivity {
-    Button mInsOrd;
+    Button mInsOrd, mModOrd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,6 +22,14 @@ public class Home01 extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(Home01.this, Ord01.class));
+            }
+        });
+        mModOrd = findViewById(R.id.buttonModOrd);
+        mModOrd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(Home01.this, List01.class));
+
             }
         });
     }
