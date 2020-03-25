@@ -17,11 +17,12 @@ import android.widget.TextView;
 import com.example.esame2017.R;
 import com.example.esame2017.data.OrdiniProvider;
 import com.example.esame2017.data.OrdiniTableHelper;
+import com.example.esame2017.fragment.CancDialog;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
-public class Ord01 extends AppCompatActivity {
+public class Ord01 extends AppCompatActivity implements CancDialog.ICancDialog {
     private static final String DATA = "DATA";
     private static final String PIZZA = "PIZZA";
     private static final String PANINO = "PANINO";
@@ -112,6 +113,49 @@ public class Ord01 extends AppCompatActivity {
                 mCaffeCT.setText(mCaffeC + "");
             }
         });
+//-----------------------------------
+        mPizzaL.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                showCancDialog(1);
+                return false;
+            }
+        });
+
+        mPaninoL.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                showCancDialog(2);
+                return false;
+            }
+        });
+
+        mBibitaL.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                showCancDialog(3);
+                return false;
+            }
+
+        });
+
+        mGelatoL.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                showCancDialog(4);
+                return false;
+            }
+
+        });
+
+        mCaffeL.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                showCancDialog(5);
+                return false;
+            }
+
+        });
 
         mAnnulla.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -135,6 +179,7 @@ public class Ord01 extends AppCompatActivity {
             }
         });
     }
+
 
     private void setViews() {
         mAnnulla = findViewById(R.id.buttonAnnulla);
@@ -162,5 +207,59 @@ public class Ord01 extends AppCompatActivity {
         outState.putInt(BIBITA, mBibitaC);
         outState.putInt(GELATO, mGelatoC);
         outState.putInt(CAFFE, mCaffeC);
+    }
+
+    @Override
+    public void onResponse(boolean aResponse, long aId) {
+        if (aResponse) {
+            int vId = (int) aId;
+            switch (vId) {
+                case 1:
+                    mPizzaC = 0;
+                    mPizzaCT.setText(mPizzaC + "");
+                    break;
+                case 2:
+                    mPaninoC = 0;
+                    mPaninoCT.setText(mPaninoC + "");
+                    break;
+                case 3:
+                    mBibitaC = 0;
+                    mBibitaCT.setText(mBibitaC + "");
+                    break;
+                case 4:
+                    mGelatoC = 0;
+                    mGelatoCT.setText(mGelatoC + "");
+                    break;
+                case 5:
+                    mCaffeC = 0;
+                    mCaffeCT.setText(mCaffeC + "");
+                    break;
+            }
+        } else {
+            return;
+        }
+
+    }
+
+    private void showCancDialog(int i) {
+        CancDialog vDialog = null;
+        switch (i) {
+            case 1:
+                vDialog = new CancDialog("PIZZA", "La quantità di PIZZA verrà azzerata. Voui continuare?", i);
+                break;
+            case 2:
+                vDialog = new CancDialog("PANINO", "La quantità di PANINO verrà azzerata. Voui continuare?", i);
+                break;
+            case 3:
+                vDialog = new CancDialog("BIBITA", "La quantità di BIBITA verrà azzerata. Voui continuare?", i);
+                break;
+            case 4:
+                vDialog = new CancDialog("GELATO", "La quantità di GELATO verrà azzerata. Voui continuare?", i);
+                break;
+            case 5:
+                vDialog = new CancDialog("CAFFE", "La quantità di CAFFE verrà azzerata. Voui continuare?", i);
+                break;
+        }
+        vDialog.show(getSupportFragmentManager(), null);
     }
 }
