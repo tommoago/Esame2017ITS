@@ -7,7 +7,7 @@
     tools:context=".activity.Ord01">
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/textViewData"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="13:25 15/07/2017"
@@ -19,9 +19,10 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView">
+        app:layout_constraintTop_toBottomOf="@+id/textViewData">
 
         <LinearLayout
+            android:id="@+id/pizzaLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
@@ -32,6 +33,7 @@
                 android:text="Pizza" />
 
             <TextView
+                android:id="@+id/pizzaCounter"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="end"
@@ -46,6 +48,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/paninoLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
@@ -56,6 +59,7 @@
                 android:text="Panino" />
 
             <TextView
+                android:id="@+id/paninoCounter"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="end"
@@ -70,6 +74,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/bibitaLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
@@ -80,6 +85,7 @@
                 android:text="Bibita" />
 
             <TextView
+                android:id="@+id/bibitaCounter"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="end"
@@ -94,6 +100,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/gelatoLayot"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
@@ -104,6 +111,7 @@
                 android:text="Gelato" />
 
             <TextView
+                android:id="@+id/gelatoCounter"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="end"
@@ -118,6 +126,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/caffeLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
@@ -128,6 +137,7 @@
                 android:text="Caffè" />
 
             <TextView
+                android:id="@+id/caffeCounter"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="end"
