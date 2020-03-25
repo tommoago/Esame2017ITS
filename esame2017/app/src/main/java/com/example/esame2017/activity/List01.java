@@ -10,6 +10,7 @@ import androidx.loader.content.Loader;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -41,10 +42,12 @@ public class List01 extends AppCompatActivity implements LoaderManager.LoaderCal
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
 
                 Cursor vResult = getContentResolver().query(Uri.parse(OrdiniProvider.ORDERS_URI + "/" + id), null, null, null, null);
+                vResult.moveToNext();
                 String vdate = vResult.getString(vResult.getColumnIndex(OrdiniTableHelper.DATA));
 
                 CancDialog vDialog = new CancDialog("CANCELLA ORDINE", "Vuoi cancellare l’ordine " + vdate + " ?", id);
-                return false;
+                vDialog.show(getSupportFragmentManager(), null);
+                return true;
             }
 
         });
@@ -71,6 +74,10 @@ public class List01 extends AppCompatActivity implements LoaderManager.LoaderCal
 
     @Override
     public void onResponse(boolean aResponse, long aId) {
+        if (aResponse) {
+            int vDeletedRows=getContentResolver().delete(Uri.parse(OrdiniProvider.ORDERS_URI + "/" + aId), null, null);
+            Log.d("asda", "onResponse: delete items"+vDeletedRows);
+        }
 
     }
 }
