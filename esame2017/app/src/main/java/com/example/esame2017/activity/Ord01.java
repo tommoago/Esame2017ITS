@@ -1,8 +1,10 @@
 package com.example.esame2017.activity;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -11,9 +13,17 @@ import android.widget.TextView;
 
 import com.example.esame2017.R;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 public class Ord01 extends AppCompatActivity {
+    private static final String DATA = "DATA";
+    private static final String PIZZA = "PIZZA";
+    private static final String PANINO = "PANINO";
+    private static final String BIBITA = "BIBITA";
+    private static final String GELATO = "GELATO";
+    private static final String CAFFE = "CAFFE";
+
     Button mAnnulla, mConferma;
     TextView mData, mPizzaCT, mPaninoCT, mBibitaCT, mGelatoCT, mCaffeCT;
     LinearLayout mPizzaL, mPaninoL, mBibitaL, mGelatoL, mCaffeL; //Counter
@@ -30,8 +40,33 @@ public class Ord01 extends AppCompatActivity {
 
         setViews();
 
-        mDataT = Calendar.getInstance().toString();
-        mData.setText(mDataT);
+        if (savedInstanceState != null) {
+            mDataT = savedInstanceState.getString(DATA);
+            mData.setText(mDataT);
+            mPizzaC = savedInstanceState.getInt(PIZZA);
+            mPizzaCT.setText(mPizzaC + "");
+            mPaninoC = savedInstanceState.getInt(PANINO);
+            mPaninoCT.setText(mPaninoC + "");
+            mBibitaC = savedInstanceState.getInt(BIBITA);
+            mBibitaCT.setText(mBibitaC + "");
+            mGelatoC = savedInstanceState.getInt(GELATO);
+            mGelatoCT.setText(mGelatoC + "");
+            mCaffeC = savedInstanceState.getInt(CAFFE);
+            mCaffeCT.setText(mCaffeC + "");
+        } else {
+            Calendar calendardate = Calendar.getInstance();
+            String strdate = null;
+
+            SimpleDateFormat sdf = new SimpleDateFormat("HH:mm dd/MM/yyyy");
+
+            if (calendardate != null) {
+                strdate = sdf.format(calendardate.getTime());
+            }
+
+            mDataT = strdate;
+            mData.setText(mDataT);
+        }
+
 
         mPizzaL.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -88,5 +123,16 @@ public class Ord01 extends AppCompatActivity {
         mBibitaL = findViewById(R.id.bibitaLayout);
         mGelatoL = findViewById(R.id.gelatoLayot);
         mCaffeL = findViewById(R.id.caffeLayout);
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState, @NonNull PersistableBundle outPersistentState) {
+        super.onSaveInstanceState(outState, outPersistentState);
+        outState.putString(DATA, mDataT);
+        outState.putInt(PIZZA, mPizzaC);
+        outState.putInt(PANINO, mPaninoC);
+        outState.putInt(BIBITA, mBibitaC);
+        outState.putInt(GELATO, mGelatoC);
+        outState.putInt(CAFFE, mCaffeC);
     }
 }
