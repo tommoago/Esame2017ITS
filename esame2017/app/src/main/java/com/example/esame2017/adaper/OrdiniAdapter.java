@@ -25,7 +25,7 @@ public class OrdiniAdapter extends CursorAdapter {
 
     @Override
     public void bindView(View view, Context context, Cursor cursor) {
-        TextView vData = view.findViewById(R.id.textViewData), vQuantita = view.findViewById(R.id.textViewQuantità), vImporto = view.findViewById(R.id.textViewImporto);
+        TextView vData = view.findViewById(R.id.textViewData), vQuantita = view.findViewById(R.id.textViewQuantità), vImporto = view.findViewById(R.id.textViewImporto), vId = view.findViewById(R.id.textViewId);
         vData.setText(cursor.getString(cursor.getColumnIndex(OrdiniTableHelper.DATA)));
         int vQuantitaInt = cursor.getInt(cursor.getColumnIndex(OrdiniTableHelper.NUM_BIBITE))
                 + cursor.getInt(cursor.getColumnIndex(OrdiniTableHelper.NUM_CAFFE))
@@ -40,5 +40,7 @@ public class OrdiniAdapter extends CursorAdapter {
 
         vQuantita.setText(vQuantitaInt + "");
         vImporto.setText(vImportoInt + "");
+        vId.setText(cursor.getInt(cursor.getColumnIndex(OrdiniTableHelper._ID)) + "");
+        vId.setVisibility(View.GONE);
     }
 }
