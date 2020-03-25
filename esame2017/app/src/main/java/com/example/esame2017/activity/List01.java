@@ -8,8 +8,10 @@ import androidx.loader.content.CursorLoader;
 import androidx.loader.content.Loader;
 
 import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -17,6 +19,7 @@ import android.widget.Toast;
 import com.example.esame2017.R;
 import com.example.esame2017.adaper.OrdiniAdapter;
 import com.example.esame2017.data.OrdiniProvider;
+import com.example.esame2017.data.OrdiniTableHelper;
 import com.example.esame2017.fragment.CancDialog;
 
 public class List01 extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor>, CancDialog.ICancDialog {
@@ -33,13 +36,17 @@ public class List01 extends AppCompatActivity implements LoaderManager.LoaderCal
         mList.setAdapter(mAdapter);
         getSupportLoaderManager().initLoader(MY_LOADER_ID, null, this);
 
-        mList.setOnLongClickListener(new View.OnLongClickListener() {
+        mList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
-            public boolean onLongClick(View v) {
-                int id = Integer.parseInt(((TextView) v.findViewById(R.id.textViewId)).getText().toString());
-                Toast.makeText(List01.this, id+"asd", Toast.LENGTH_SHORT).show();
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+
+                Cursor vResult = getContentResolver().query(Uri.parse(OrdiniProvider.ORDERS_URI + "/" + id), null, null, null, null);
+                String vdate = vResult.getString(vResult.getColumnIndex(OrdiniTableHelper.DATA));
+
+                CancDialog vDialog = new CancDialog("CANCELLA ORDINE", "Vuoi cancellare l’ordine " + vdate + " ?", id);
                 return false;
             }
+
         });
 
     }
