@@ -51,7 +51,7 @@ public class CancDialog extends DialogFragment {
             }
         });
 
-        return super.onCreateDialog(savedInstanceState);
+        return vBuilder.create();
     }
 
     @Override
