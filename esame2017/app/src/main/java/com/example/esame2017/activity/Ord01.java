@@ -3,8 +3,11 @@ package com.example.esame2017.activity;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.ContentValues;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.PersistableBundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -12,6 +15,8 @@ import android.widget.QuickContactBadge;
 import android.widget.TextView;
 
 import com.example.esame2017.R;
+import com.example.esame2017.data.OrdiniProvider;
+import com.example.esame2017.data.OrdiniTableHelper;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -107,6 +112,27 @@ public class Ord01 extends AppCompatActivity {
                 mCaffeCT.setText(mCaffeC + "");
             }
         });
+
+        mAnnulla.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+        mConferma.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ContentValues vValues = new ContentValues();
+                vValues.put(OrdiniTableHelper.DATA, mDataT);
+                vValues.put(OrdiniTableHelper.NUM_BIBITE, mBibitaC);
+                vValues.put(OrdiniTableHelper.NUM_CAFFE, mCaffeC);
+                vValues.put(OrdiniTableHelper.NUM_GELATI, mGelatoC);
+                vValues.put(OrdiniTableHelper.NUM_PANINI, mPaninoC);
+                vValues.put(OrdiniTableHelper.NUM_PIZZE, mPizzaC);
+                Uri vResultUri = getContentResolver().insert(OrdiniProvider.ORDERS_URI, vValues);
+                Log.d("asda", "onClick: " + vResultUri);
+            }
+        });
     }
 
     private void setViews() {
@@ -125,9 +151,10 @@ public class Ord01 extends AppCompatActivity {
         mCaffeL = findViewById(R.id.caffeLayout);
     }
 
+
     @Override
-    public void onSaveInstanceState(@NonNull Bundle outState, @NonNull PersistableBundle outPersistentState) {
-        super.onSaveInstanceState(outState, outPersistentState);
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
         outState.putString(DATA, mDataT);
         outState.putInt(PIZZA, mPizzaC);
         outState.putInt(PANINO, mPaninoC);
