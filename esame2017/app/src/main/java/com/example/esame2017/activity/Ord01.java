@@ -131,6 +131,7 @@ public class Ord01 extends AppCompatActivity {
                 vValues.put(OrdiniTableHelper.NUM_PIZZE, mPizzaC);
                 Uri vResultUri = getContentResolver().insert(OrdiniProvider.ORDERS_URI, vValues);
                 Log.d("asda", "onClick: " + vResultUri);
+                finish();
             }
         });
     }

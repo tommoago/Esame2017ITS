@@ -27,7 +27,7 @@
 
         <provider
             android:name=".data.OrdiniProvider"
-            android:authorities="com.example.esame2017.data.ordiniprovider" />
+            android:authorities="com.example.esame2017.data.OrdiniProvider" />
     </application>
 
 </manifest>
