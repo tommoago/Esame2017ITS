@@ -12,7 +12,7 @@ import com.example.esame2017.R;
 public class Ord01 extends AppCompatActivity {
     Button mAnnulla, mConferma;
     TextView mData, mPizzaCT, mPaninoCT, mBibitaCT, mGelatoCT, mCaffeCT;
-    LinearLayout mPizzaL, mPaninoL, mBibitaL, mGelatoL, mCaffeL;
+    LinearLayout mPizzaL, mPaninoL, mBibitaL, mGelatoL, mCaffeL; //Counter
 
     int mPizzaC=0, mPaninoC=0, mBibitaC=0, mGelatoC=0, mCaffeC=0;
 
