@@ -3,14 +3,18 @@ package com.example.esame2017.activity;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.example.esame2017.R;
+import com.example.esame2017.data.OrdiniProvider;
 
 public class Home01 extends AppCompatActivity {
     Button mInsOrd, mModOrd;
+    TextView mTextOrd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,5 +36,18 @@ public class Home01 extends AppCompatActivity {
 
             }
         });
+
+        mTextOrd = findViewById(R.id.textViewTotOrd);
+
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Cursor vCursor = getContentResolver().query(OrdiniProvider.ORDERS_URI, null, null, null, null);
+
+        int vTotOrds = vCursor.getCount();
+        mTextOrd.setText("Totale ordini inseriti: " + vTotOrds);
     }
 }
