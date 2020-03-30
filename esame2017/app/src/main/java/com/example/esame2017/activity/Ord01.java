@@ -41,7 +41,7 @@ public class Ord01 extends AppCompatActivity implements CancDialog.ICancDialog {
 
     String mDataT;
 
-    long mId;
+    long mId = -1;
     int mTotal;
 
     @Override
@@ -82,6 +82,7 @@ public class Ord01 extends AppCompatActivity implements CancDialog.ICancDialog {
         if (getIntent().getExtras() != null) {
             mId = getIntent().getExtras().getLong(ORD_ID);
             getOrder(mId);
+            updateTot();
         }
 
 
@@ -90,6 +91,7 @@ public class Ord01 extends AppCompatActivity implements CancDialog.ICancDialog {
             public void onClick(View v) {
                 mPizzaC++;
                 mPizzaCT.setText(mPizzaC + "");
+                updateTot();
             }
         });
 
@@ -98,6 +100,7 @@ public class Ord01 extends AppCompatActivity implements CancDialog.ICancDialog {
             public void onClick(View v) {
                 mPaninoC++;
                 mPaninoCT.setText(mPaninoC + "");
+                updateTot();
             }
         });
 
@@ -106,6 +109,7 @@ public class Ord01 extends AppCompatActivity implements CancDialog.ICancDialog {
             public void onClick(View v) {
                 mBibitaC++;
                 mBibitaCT.setText(mBibitaC + "");
+                updateTot();
             }
         });
 
@@ -114,6 +118,7 @@ public class Ord01 extends AppCompatActivity implements CancDialog.ICancDialog {
             public void onClick(View v) {
                 mGelatoC++;
                 mGelatoCT.setText(mGelatoC + "");
+                updateTot();
             }
         });
 
@@ -122,6 +127,7 @@ public class Ord01 extends AppCompatActivity implements CancDialog.ICancDialog {
             public void onClick(View v) {
                 mCaffeC++;
                 mCaffeCT.setText(mCaffeC + "");
+                updateTot();
             }
         });
 //-----------------------------------
@@ -184,8 +190,15 @@ public class Ord01 extends AppCompatActivity implements CancDialog.ICancDialog {
                 vValues.put(OrdiniTableHelper.NUM_GELATI, mGelatoC);
                 vValues.put(OrdiniTableHelper.NUM_PANINI, mPaninoC);
                 vValues.put(OrdiniTableHelper.NUM_PIZZE, mPizzaC);
-                Uri vResultUri = getContentResolver().insert(OrdiniProvider.ORDERS_URI, vValues);
-                Log.d("asda", "onClick: " + vResultUri);
+                if (mId == -1) {
+                    Uri vResultUri = getContentResolver().insert(OrdiniProvider.ORDERS_URI, vValues);
+                    Log.d("asda", "onClick: " + vResultUri);
+                } else {
+                    int vUpdatedRows = getContentResolver().update(Uri.parse(OrdiniProvider.ORDERS_URI + "/" + mId), vValues,
+                            null, null);
+                    Log.d("asda", "onClick: update "+vUpdatedRows);
+
+                }
                 finish();
             }
         });
@@ -272,6 +285,7 @@ public class Ord01 extends AppCompatActivity implements CancDialog.ICancDialog {
                     mCaffeCT.setText(mCaffeC + "");
                     break;
             }
+            updateTot();
         } else {
             return;
         }
@@ -300,7 +314,17 @@ public class Ord01 extends AppCompatActivity implements CancDialog.ICancDialog {
         vDialog.show(getSupportFragmentManager(), null);
     }
 
-    private void updateTot(){
+    private void updateTot() {
+        if (mId != -1) {
+            mTotal = (mBibitaC * 3)
+                    + (mCaffeC * 1)
+                    + (mPaninoC * 6)
+                    + (mGelatoC * 3)
+                    + (mPizzaC * 8);
+
+            mData.setText("TOTALE € " + mTotal);
+        }
+
 
     }
 }
