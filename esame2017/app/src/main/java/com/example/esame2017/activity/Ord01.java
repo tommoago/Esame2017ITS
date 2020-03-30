@@ -52,6 +52,12 @@ public class Ord01 extends AppCompatActivity implements CancDialog.ICancDialog {
 
         setViews();
 
+        if (getIntent().getExtras() != null) {
+            mId = getIntent().getExtras().getLong(ORD_ID);
+            getOrder(mId);
+            updateTot();
+        }
+
         if (savedInstanceState != null) {
             mDataT = savedInstanceState.getString(DATA);
             mData.setText(mDataT);
@@ -65,6 +71,9 @@ public class Ord01 extends AppCompatActivity implements CancDialog.ICancDialog {
             mGelatoCT.setText(mGelatoC + "");
             mCaffeC = savedInstanceState.getInt(CAFFE);
             mCaffeCT.setText(mCaffeC + "");
+            if(mId!=-1){
+                updateTot();
+            }
         } else {
             Calendar calendardate = Calendar.getInstance();
             String strdate = null;
@@ -75,14 +84,10 @@ public class Ord01 extends AppCompatActivity implements CancDialog.ICancDialog {
                 strdate = sdf.format(calendardate.getTime());
             }
 
-            mDataT = strdate;
-            mData.setText(mDataT);
-        }
-
-        if (getIntent().getExtras() != null) {
-            mId = getIntent().getExtras().getLong(ORD_ID);
-            getOrder(mId);
-            updateTot();
+            if (mId == -1) {
+                mDataT = strdate;
+                mData.setText(mDataT);
+            }
         }
 
 
@@ -196,7 +201,7 @@ public class Ord01 extends AppCompatActivity implements CancDialog.ICancDialog {
                 } else {
                     int vUpdatedRows = getContentResolver().update(Uri.parse(OrdiniProvider.ORDERS_URI + "/" + mId), vValues,
                             null, null);
-                    Log.d("asda", "onClick: update "+vUpdatedRows);
+                    Log.d("asda", "onClick: update " + vUpdatedRows);
 
                 }
                 finish();
