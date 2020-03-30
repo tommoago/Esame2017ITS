@@ -25,7 +25,7 @@ import com.example.esame2017.data.OrdiniTableHelper;
 import com.example.esame2017.fragment.CancDialog;
 
 public class List01 extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor>, CancDialog.ICancDialog {
-    private static final String ORD_ID = "ORD_ID";
+    public static final String ORD_ID = "ORD_ID";
     ListView mList;
     OrdiniAdapter mAdapter;
     public static final int MY_LOADER_ID = 0;

@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.ContentValues;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.PersistableBundle;
@@ -22,6 +23,8 @@ import com.example.esame2017.fragment.CancDialog;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
+import static com.example.esame2017.activity.List01.ORD_ID;
+
 public class Ord01 extends AppCompatActivity implements CancDialog.ICancDialog {
     private static final String DATA = "DATA";
     private static final String PIZZA = "PIZZA";
@@ -37,6 +40,9 @@ public class Ord01 extends AppCompatActivity implements CancDialog.ICancDialog {
     int mPizzaC = 0, mPaninoC = 0, mBibitaC = 0, mGelatoC = 0, mCaffeC = 0;
 
     String mDataT;
+
+    long mId;
+    int mTotal;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,6 +77,11 @@ public class Ord01 extends AppCompatActivity implements CancDialog.ICancDialog {
 
             mDataT = strdate;
             mData.setText(mDataT);
+        }
+
+        if (getIntent().getExtras() != null) {
+            mId = getIntent().getExtras().getLong(ORD_ID);
+            getOrder(mId);
         }
 
 
@@ -180,6 +191,32 @@ public class Ord01 extends AppCompatActivity implements CancDialog.ICancDialog {
         });
     }
 
+    private void getOrder(long aId) {
+
+        Cursor vCursor = getContentResolver().query(Uri.parse(OrdiniProvider.ORDERS_URI + "/" + aId),
+                null, null, null, null);
+        vCursor.moveToNext();
+        mDataT = vCursor.getString(vCursor.getColumnIndex(OrdiniTableHelper.DATA));
+        mData.setText(mDataT);
+        mPizzaC = vCursor.getInt(vCursor.getColumnIndex(OrdiniTableHelper.NUM_PIZZE));
+        if (mPizzaC == 0) mPizzaL.setVisibility(View.GONE);
+        else mPizzaCT.setText(mPizzaC + "");
+        mPaninoC = vCursor.getInt(vCursor.getColumnIndex(OrdiniTableHelper.NUM_PANINI));
+        if (mPaninoC == 0) mPaninoL.setVisibility(View.GONE);
+        else mPaninoCT.setText(mPaninoC + "");
+        mBibitaC = vCursor.getInt(vCursor.getColumnIndex(OrdiniTableHelper.NUM_BIBITE));
+        if (mBibitaC == 0) mBibitaL.setVisibility(View.GONE);
+        mBibitaCT.setText(mBibitaC + "");
+        mGelatoC = vCursor.getInt(vCursor.getColumnIndex(OrdiniTableHelper.NUM_GELATI));
+        if (mGelatoC == 0) mGelatoL.setVisibility(View.GONE);
+        mGelatoCT.setText(mGelatoC + "");
+        mCaffeC = vCursor.getInt(vCursor.getColumnIndex(OrdiniTableHelper.NUM_CAFFE));
+        if (mCaffeC == 0) mCaffeL.setVisibility(View.GONE);
+        mCaffeCT.setText(mCaffeC + "");
+
+
+    }
+
 
     private void setViews() {
         mAnnulla = findViewById(R.id.buttonAnnulla);
@@ -261,5 +298,9 @@ public class Ord01 extends AppCompatActivity implements CancDialog.ICancDialog {
                 break;
         }
         vDialog.show(getSupportFragmentManager(), null);
+    }
+
+    private void updateTot(){
+
     }
 }
