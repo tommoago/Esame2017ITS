@@ -39,7 +39,7 @@ public class OrdiniAdapter extends CursorAdapter {
                 + (cursor.getInt(cursor.getColumnIndex(OrdiniTableHelper.NUM_PIZZE)) * 8);
 
         vQuantita.setText(vQuantitaInt + "");
-        vImporto.setText(vImportoInt + "");
+        vImporto.setText("€ " + vImportoInt);
         vId.setText(cursor.getInt(cursor.getColumnIndex(OrdiniTableHelper._ID)) + "");
         vId.setVisibility(View.GONE);
     }

@@ -34,6 +34,7 @@ public class List01 extends AppCompatActivity implements LoaderManager.LoaderCal
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list01);
+        setTitle("Gestione Ordini");
         mList = findViewById(R.id.listView);
         mAdapter = new OrdiniAdapter(this, null);
         mList.setAdapter(mAdapter);
