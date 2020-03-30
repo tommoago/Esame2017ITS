@@ -7,6 +7,7 @@ import androidx.loader.app.LoaderManager;
 import androidx.loader.content.CursorLoader;
 import androidx.loader.content.Loader;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -24,6 +25,7 @@ import com.example.esame2017.data.OrdiniTableHelper;
 import com.example.esame2017.fragment.CancDialog;
 
 public class List01 extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor>, CancDialog.ICancDialog {
+    private static final String ORD_ID = "ORD_ID";
     ListView mList;
     OrdiniAdapter mAdapter;
     public static final int MY_LOADER_ID = 0;
@@ -50,6 +52,17 @@ public class List01 extends AppCompatActivity implements LoaderManager.LoaderCal
                 return true;
             }
 
+        });
+
+        mList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent vIntent=new Intent(List01.this, Ord01.class);
+                Bundle vBundle=new Bundle();
+                vBundle.putLong(ORD_ID,id);
+                vIntent.putExtras(vBundle);
+                startActivity(vIntent);
+            }
         });
 
     }
